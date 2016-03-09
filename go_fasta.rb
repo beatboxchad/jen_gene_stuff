@@ -21,12 +21,9 @@ end
 
 def parse_file file
   #TODO make this the name of the thing
-
   raw_text = File.read(file)
-
   raw_text.scan(/^>(\S+)/i).each { |rowname|
     out      = File.open("#{file.sub('.fasta', '')}_new.fasta", 'a')
-    err      = File.open("#{file.sub('.fasta', '')}_errors", 'a')
     outlines = []
     errors   = []
     outline  = find_match(rowname)
@@ -39,9 +36,11 @@ def parse_file file
     outlines.each do |line|
       out.write(line)
     end
-    if errors.count > 0 then
+
+    if not errors.empty? then
+      err      = File.open("#{file.sub('.fasta', '')}_errors", 'a')
       errors.each do |line|
-        err.write(line)
+        err.write("#{line}\n")
       end
     end
   }
