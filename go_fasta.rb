@@ -42,7 +42,9 @@ def parse_file file
       errors.each do |line|
         err.write("#{line}\n")
       end
+      err.close
     end
+  out.close
   }
 end
 
